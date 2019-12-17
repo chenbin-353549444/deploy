@@ -1,5 +1,6 @@
 #!/bin/bash
 # install docker
+# bash <(curl -fSsL http://www.chenb.top/deploy/docker-install.sh)
 
 now=`date +%s`
 function log() {
