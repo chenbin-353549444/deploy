@@ -21,24 +21,21 @@ else
 fi
 
 # install docker
-read -p "Install Docker?: " -ei $INSTALL_DOCKER INSTALL_DOCKER
-if [[ "$INSTALL_DOCKER" == "Y" ]];then
-  log "install and upgrade docker"
-  if [[ "$OS" == "Ubuntu" ]];then
-    apt-get update
-    apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-    curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
-    add-apt-repository -u "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-    apt-get -y install docker-ce
-  fi
- 
-  if [[ "$OS" == "CentOS" ]];then
-    yum install -y yum-utils device-mapper-persistent-data lvm2
-    yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-    yum makecache fast
-    yum -y install docker-ce
-    systemctl enable docker && systemctl start docker  
-  fi
+log "install and upgrade docker"
+if [[ "$OS" == "Ubuntu" ]];then
+  apt-get update
+  apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+  curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | apt-key add -
+  add-apt-repository -u "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+  apt-get -y install docker-ce
+fi
+
+if [[ "$OS" == "CentOS" ]];then
+  yum install -y yum-utils device-mapper-persistent-data lvm2
+  yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+  yum makecache fast
+  yum -y install docker-ce
+  systemctl enable docker && systemctl start docker  
 fi
 
 # congifure mirror and insecure registries
