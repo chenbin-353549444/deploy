@@ -9,16 +9,18 @@ bash <(curl -fSsL http://www.chenb.top/deploy/docker-install.sh)
 
 ### 启动jenkins容器
 ```bash
-docker run \
+docker run -d \
   --name jenkins \
-  -d \
-  -u root \
+  --user root \
+  --restart=always \
   -p 8080:8080 \
-  -v jenkins-data:/var/jenkins_home \
+  -v jenkins-data:/var/jenkins_home:z \
   -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /root:/home \
+  -v /usr/bin/docker:/usr/bin/docker \
   -e TZ=Asia/Shanghai \
-  -v "$HOME":/home \
-  jenkinsci/blueocean
+  -m 1g \  
+  jenkins/jenkins:2.568.3-jdk21
 ```
 
 ### 启动mysql容器
